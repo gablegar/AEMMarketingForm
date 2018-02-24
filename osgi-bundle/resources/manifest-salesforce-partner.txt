@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Created-By: gablegar
+Bundle-ManifestVersion: 2
+Bundle-Name: SalesForcePartner 42.0.0 bundle
+Bundle-Description: Package SalesForcePartner 42.0.0 in an OSGi bundle
+Bundle-Version: 42.0.0
+Bundle-ClassPath: force-partner-api-42.0.0.jar
+Export-Package: com.sforce.soap.partner.*; version="42.0.0"
+Bundle-SymbolicName: com.force.api.force-partner-api

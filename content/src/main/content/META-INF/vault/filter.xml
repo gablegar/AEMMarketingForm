@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--this file is only needed when using vault in command line -->
+<workspaceFilter version="1.0">
+    <filter root="/apps/AEMMarketingForm"/>
+    <filter root="/apps/AEMMarketingForm/components/content"/>
+    <filter root="/apps/AEMMarketingForm/components/page"/>
+    <filter root="/etc/clientlibs/AEMMarketingForm"/>
+    <filter root="/content/todo"/>
+</workspaceFilter>

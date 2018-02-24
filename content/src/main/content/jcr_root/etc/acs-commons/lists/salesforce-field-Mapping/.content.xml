@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:primaryType="cq:Page">
+    <jcr:content
+        cq:designPath="/etc/designs/acs-commons"
+        cq:lastModified="{Date}2018-02-23T17:04:01.302-05:00"
+        cq:lastModifiedBy="admin"
+        cq:template="/apps/acs-commons/templates/utilities/genericlist"
+        jcr:primaryType="cq:PageContent"
+        jcr:title="Sales Force Field Mapping"
+        sling:resourceType="acs-commons/components/utilities/genericlist">
+        <list
+            jcr:primaryType="nt:unstructured"
+            sling:resourceType="foundation/components/parsys">
+            <item
+                jcr:created="{Date}2018-02-22T11:57:56.143-05:00"
+                jcr:createdBy="admin"
+                jcr:lastModified="{Date}2018-02-23T17:03:57.114-05:00"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="firstName"
+                sling:resourceType="acs-commons/components/utilities/genericlist/item"
+                value="firstName"/>
+            <item_121765750
+                jcr:created="{Date}2018-02-23T15:25:32.458-05:00"
+                jcr:createdBy="admin"
+                jcr:lastModified="{Date}2018-02-23T17:04:01.297-05:00"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="lastName"
+                sling:resourceType="acs-commons/components/utilities/genericlist/item"
+                value="lastName"/>
+            <item_143243111
+                jcr:created="{Date}2018-02-23T15:00:51.804-05:00"
+                jcr:createdBy="admin"
+                jcr:lastModified="{Date}2018-02-23T15:29:05.854-05:00"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="business"
+                sling:resourceType="acs-commons/components/utilities/genericlist/item"
+                value="Company"/>
+        </list>
+    </jcr:content>
+</jcr:root>

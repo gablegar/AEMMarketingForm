@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0"
+		  jcr:primaryType="sling:OsgiConfig"
+		  endpoint="https://login.salesforce.com/services/Soap/u/41.0"
+		  salesforce-user="gabriel.legarda.dev@gmail.com"
+		  salesforce-secret="hIs2jdKpDHyEOx96zaFBzha7"
+/>

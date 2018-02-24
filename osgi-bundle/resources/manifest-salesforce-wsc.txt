@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Created-By: gablegar
+Bundle-ManifestVersion: 2
+Bundle-Name: SalesForceWSC 42.0.0 bundle
+Bundle-Description: Package SalesForceWSC 42.0.0 in an OSGi bundle
+Bundle-Version: 42.0.0
+Bundle-ClassPath: force-wsc-42.0.0.jar
+Bundle-SymbolicName: com.force.api; version="42.0.0"
+Export-Package: com.sforce.ws.*
