@@ -30,37 +30,22 @@ public class SalesForceServiceImpl implements SalesForceService {
 	private String password;
 	static PartnerConnection connection;
 
-	public SalesForceServiceImpl(){
-	}
-
 	@Activate
 	@Modified
 	protected void createConnection(ComponentContext context) {
-		String endpoint = PropertiesUtil.toString(context.getProperties().get("endpoint"), null);
-		String user = PropertiesUtil.toString(context.getProperties().get("salesforce-user"), null);
-		String password = PropertiesUtil.toString(context.getProperties().get("salesforce-secret"), null);
-		setUsername(user);
-		setPassword(password);
-		setEndpoint(endpoint);
+		setEndpoint(PropertiesUtil.toString(context.getProperties().get("endpoint"), null));
+		setUsername(PropertiesUtil.toString(context.getProperties().get("salesforce-user"), null));
+		setPassword(PropertiesUtil.toString(context.getProperties().get("salesforce-secret"), null));
 
 		ConnectorConfig config = new ConnectorConfig();
 		if(getUsername()!= null && getEndpoint() != null && getPassword()!= null) {
-			config.setUsername(getUsername());
-			config.setPassword(getPassword());
-			config.setAuthEndpoint(getEndpoint());
-			config.setServiceEndpoint(getEndpoint());
-			config.setTraceMessage(true);
+			setSalesForceConnectionConfig(config);
 			try {
 
 				connection = Connector.newConnection(config);
-				log.info("MarketingFormServiceImpl activated with {} {}", endpoint, user);
+				log.info("MarketingFormServiceImpl activated with {} {}", getEndpoint(), getUsername());
 				if(connection != null) {
-					log.info("Connection to SalesForce Successful");
-					// display some current settings
-					log.debug("Authorization EndPoint: " + config.getAuthEndpoint());
-					log.debug("Service EndPoint: " + config.getServiceEndpoint());
-					log.debug("Username: " + config.getUsername());
-					log.debug("SessionId: " + config.getSessionId());
+					logConnectionSucessful(config);
 				}
 
 			} catch (ConnectionException exception) {
@@ -71,53 +56,16 @@ public class SalesForceServiceImpl implements SalesForceService {
 		}
 	}
 
-
 	public boolean saveNewLeadOnSalesForce(SObject[] lead, String campaignID) {
-		boolean saved = false;
+		boolean success = false;
 		if( connection != null ) {
-			try {
-				if(campaignID != null && !campaignID.isEmpty()) {
-					QueryResult qr = connection.query("Select Id from Campaign where Name = " + "'" + campaignID + "'");
-					campaignID = qr.getRecords()[0].getId();
-				} else {
-					log.warn("Please configure Sales Force Campaign name in " +
-							"/etc/acs-commons/lists/salesforce-field-Mapping.html as it is on salesforce");
-				}
-
-			} catch (Exception exception) {
-				log.error("Error searching for SalesForce campaign, please set a valid value: {}", exception);
-			}
-
-			try {
-				if(campaignID != null) {
-
-					// create the records in SalesForce.com
-					SaveResult[] saveResults = connection.create(lead);
-					for (SaveResult result : saveResults) {
-						if (result.isSuccess()) {
-							log.info("Lead created with ID " + result.getId());
-							SaveResult[] resultAddingLeadToCampaign = connection.create(salesForceMapperService.mapFormToSalesForceCampaignMember(result.getId(), campaignID));
-							for (SaveResult resultCampaign : resultAddingLeadToCampaign) {
-								if (resultCampaign.isSuccess()) {
-									log.info("Lead created and added to campaign " + resultCampaign.getId());
-									saved = true;
-								} else {
-									connection.delete(new String[]{result.getId()});
-									logSalesForceErrors(result);
-								}
-							}
-						} else {
-							connection.delete(new String[]{result.getId()});
-							logSalesForceErrors(result);
-						}
-					}
-				}
-
-			} catch (Exception exception) {
-				log.error("Error while creating Lead: {}", exception);
+			campaignID = retrieveSalesForceCampaignId(campaignID);
+			if(campaignID != null) {
+				SaveResult saveLeadResults = saveLead(lead)[0]; //this is because we save only one lead
+				success = saveLeadOnCampaign(saveLeadResults, campaignID);
 			}
 		}
-		return saved;
+		return success;
 	}
 
 	public String getEndpoint() {
@@ -144,9 +92,88 @@ public class SalesForceServiceImpl implements SalesForceService {
 		this.password = password;
 	}
 
+	private String retrieveSalesForceCampaignId(String campaignName) {
+		try {
+			if(campaignName != null && !campaignName.isEmpty()) {
+				QueryResult qr = connection.query("Select Id from Campaign where Name = " + "'" + campaignName + "'");
+				campaignName = qr.getRecords()[0].getId();
+			} else {
+				log.warn("Please configure Sales Force Campaign name in " +
+						"/etc/acs-commons/lists/salesforce-field-Mapping.html as it is on salesforce");
+			}
+
+		} catch (Exception exception) {
+			log.error("Error searching for SalesForce campaign, please set a valid value: {}", exception);
+		}
+		return campaignName;
+	}
+
+	private SaveResult[] saveLead(SObject[] lead) {
+		try {
+			// create the records in SalesForce.com
+			return connection.create(lead);
+		} catch (Exception exception) {
+			log.error("Error while creating Lead: {}", exception);
+			SaveResult[] saveResults = new SaveResult[1];
+			SaveResult error = new SaveResult();
+			error.setSuccess(false);
+			saveResults[0] = error;
+			return saveResults;
+		}
+	}
+
+	private boolean saveLeadOnCampaign(SaveResult leadResults, String campaignId) {
+		try {
+				if (leadResults.isSuccess()) {
+					log.info("Lead created with ID " + leadResults.getId());
+					SObject[] campaignMember = salesForceMapperService.mapFormToSalesForceCampaignMember(leadResults.getId(), campaignId);
+					SaveResult[] resultAddingLeadToCampaign = connection.create(campaignMember);
+					//in this case we are sure that SaveResult has only one element as we only saved one lead
+					if (resultAddingLeadToCampaign[0].isSuccess()) {
+						log.info("Lead {} created and added to campaign {} ", leadResults.getId(), resultAddingLeadToCampaign[0].getId());
+						return true;
+					} else {
+						deleteLeadIfCampaignError(leadResults);
+					}
+				} else {
+					deleteLeadIfCampaignError(leadResults);
+				}
+		} catch (Exception exception) {
+			log.error("Error while adding Lead to campaign: {}", exception);
+		}
+		return false;
+	}
+
+	private void deleteLeadIfCampaignError(SaveResult result) throws ConnectionException {
+		connection.delete(new String[]{result.getId()});
+		logSalesForceErrors(result);
+	}
+
+	private void setSalesForceConnectionConfig(ConnectorConfig config) {
+		config.setUsername(getUsername());
+		config.setPassword(getPassword());
+		config.setAuthEndpoint(getEndpoint());
+		config.setServiceEndpoint(getEndpoint());
+		config.setTraceMessage(true);
+	}
+
+	private void logConnectionSucessful(ConnectorConfig config) {
+		//this method is not called often
+		// it is called when the OSGI service is activated
+		// or if the properties change
+		log.info("Connection to SalesForce Successful");
+		// display some current settings
+		log.debug("Authorization EndPoint: " + config.getAuthEndpoint());
+		log.debug("Service EndPoint: " + config.getServiceEndpoint());
+		log.debug("Username: " + config.getUsername());
+		log.debug("SessionId: " + config.getSessionId());
+	}
+
+
 	private void logSalesForceErrors(SaveResult result) {
 		for(Error error: result.getErrors()) {
 			log.error("Error while creating to Lead: {}", error);
 		}
 	}
+
 }

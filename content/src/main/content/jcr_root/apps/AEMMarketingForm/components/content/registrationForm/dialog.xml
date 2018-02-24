@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0"
+		  jcr:primaryType="cq:Dialog"
+		  jcr:title="Registration Form Template"
+		  xtype="tabpanel">
+	<items jcr:primaryType="cq:WidgetCollection">
+		<tab1 jcr:primaryType="cq:Panel"
+			  title="Appearance">
+			<items jcr:primaryType="cq:WidgetCollection">
+				<customStylesheet
+						jcr:primaryType="cq:Widget"
+						fieldLabel="Campaign Name"
+						name="./campaignName"
+						options="/etc/acs-commons/lists/salesForceCampaignNames/_jcr_content.list.json"
+						type="select"
+						xtype="selection"/>
+				<customStylesheetColor
+						jcr:primaryType="cq:Widget"
+						fieldLabel="Background Color"
+						fieldDescription="chose the background color"
+						name="./color"
+						options="/etc/acs-commons/lists/backgroundColorList/_jcr_content.list.json"
+						type="select"
+						xtype="selection"/>
+			</items>
+		</tab1>
+	</items>
+</jcr:root>

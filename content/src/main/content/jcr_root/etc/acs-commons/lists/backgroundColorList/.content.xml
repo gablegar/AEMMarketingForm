@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:primaryType="cq:Page">
+    <jcr:content
+        cq:designPath="/etc/designs/acs-commons"
+        cq:lastModified="{Date}2018-02-24T10:10:16.583-05:00"
+        cq:lastModifiedBy="admin"
+        cq:template="/apps/acs-commons/templates/utilities/genericlist"
+        jcr:primaryType="cq:PageContent"
+        jcr:title="Background Colors"
+        sling:resourceType="acs-commons/components/utilities/genericlist">
+        <list
+            jcr:primaryType="nt:unstructured"
+            sling:resourceType="foundation/components/parsys">
+            <item
+                jcr:created="{Date}2018-02-24T10:06:45.608-05:00"
+                jcr:createdBy="admin"
+                jcr:lastModified="{Date}2018-02-24T10:10:11.443-05:00"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="None"
+                sling:resourceType="acs-commons/components/utilities/genericlist/item"/>
+            <item_2045493102
+                jcr:created="{Date}2018-02-24T10:07:30.677-05:00"
+                jcr:createdBy="admin"
+                jcr:lastModified="{Date}2018-02-24T10:08:50.628-05:00"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="Violet"
+                sling:resourceType="acs-commons/components/utilities/genericlist/item"
+                value="#9c27b0"/>
+            <item_1539301255
+                jcr:created="{Date}2018-02-24T10:09:01.671-05:00"
+                jcr:createdBy="admin"
+                jcr:lastModified="{Date}2018-02-24T10:09:11.251-05:00"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="Green"
+                sling:resourceType="acs-commons/components/utilities/genericlist/item"
+                value="#4caf50"/>
+            <item_1075315321
+                jcr:created="{Date}2018-02-24T10:09:59.708-05:00"
+                jcr:createdBy="admin"
+                jcr:lastModified="{Date}2018-02-24T10:10:16.577-05:00"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="Red"
+                sling:resourceType="acs-commons/components/utilities/genericlist/item"
+                value="#dc1f16"/>
+        </list>
+    </jcr:content>
+</jcr:root>

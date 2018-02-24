@@ -2,7 +2,7 @@
 <jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
     jcr:primaryType="cq:Page">
     <jcr:content
-        cq:lastModified="{Date}2018-02-20T20:07:21.277-05:00"
+        cq:lastModified="{Date}2018-02-24T10:58:15.879-05:00"
         cq:lastModifiedBy="admin"
         cq:template="/apps/AEMMarketingForm/templates/todoTemplate"
         jcr:primaryType="cq:PageContent"
@@ -11,13 +11,31 @@
         <par
             jcr:primaryType="nt:unstructured"
             sling:resourceType="foundation/components/parsys">
+            <header
+                jcr:created="{Date}2018-02-24T09:44:50.116-05:00"
+                jcr:createdBy="admin"
+                jcr:lastModified="{Date}2018-02-24T09:45:28.770-05:00"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="AEMMarketingForm/components/content/header"
+                title="New campaign from our brand to get more benefits!"/>
             <registrationform
                 jcr:created="{Date}2018-02-20T19:55:07.343-05:00"
                 jcr:createdBy="admin"
-                jcr:lastModified="{Date}2018-02-20T19:55:07.343-05:00"
+                jcr:lastModified="{Date}2018-02-24T10:58:15.876-05:00"
                 jcr:lastModifiedBy="admin"
                 jcr:primaryType="nt:unstructured"
-                sling:resourceType="AEMMarketingForm/components/content/registrationForm"/>
+                sling:resourceType="AEMMarketingForm/components/content/registrationForm"
+                campaignName="New Clients Campaign"
+                color="#9c27b0"/>
+            <footer
+                jcr:created="{Date}2018-02-24T09:39:35.782-05:00"
+                jcr:createdBy="admin"
+                jcr:lastModified="{Date}2018-02-24T09:45:42.376-05:00"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="AEMMarketingForm/components/content/footer"
+                footer="All rights reserved"/>
         </par>
     </jcr:content>
 </jcr:root>

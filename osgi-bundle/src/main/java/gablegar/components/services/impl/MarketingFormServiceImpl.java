@@ -17,8 +17,6 @@ import org.osgi.service.component.ComponentContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Map;
-
 /**
  * Created by glegarda on 21/02/18.
  */
@@ -35,11 +33,8 @@ public class MarketingFormServiceImpl implements MarketingFormService {
 
 	public boolean processForm(Resource resource, RequestParameterMap formValues, ResourceResolver resourceResolver) {
 		boolean processingResult = false;
+		String campaignNameOnSalesForce = formValues.getValue("campaignName").toString();
 		PageManager pageManager = resourceResolver.adaptTo(PageManager.class);
-		Page salesForceCampaignsNamePage = pageManager.getPage("/etc/acs-commons/lists/salesForceCampaignNames");
-		GenericList listOfSalesForceCampaigns = salesForceCampaignsNamePage.adaptTo(GenericList.class);
-		String campaignNameOnSalesForce = listOfSalesForceCampaigns.lookupTitle("RegistrationNewClients");
-
 		Page fieldMappingPage = pageManager.getPage("/etc/acs-commons/lists/salesforce-field-Mapping");
 		GenericList listOfMappingsSalesForce = fieldMappingPage.adaptTo(GenericList.class);
 

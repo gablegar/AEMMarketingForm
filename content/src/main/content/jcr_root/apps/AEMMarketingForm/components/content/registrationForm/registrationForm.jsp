@@ -13,6 +13,7 @@
             Last name: <input type="text" name="lastName" placeholder="last name"><br>
             Business: <input type="text" name="business" placeholder="Business"><br>
             Phone: <input type="text" name="phoneNumber" placeholder="phone number"><br>
+            <input type="hidden" name="campaignName" value="${properties.campaignName}"><br>
             <input type="submit" value="Submit">
         </form>
     </div>
