@@ -1,17 +1,19 @@
 package gablegar.components.services;
 
-import com.adobe.acs.commons.genericlists.GenericList;
+import com.adobe.acs.commons.genericlists.GenericList.Item;
 import com.sforce.soap.partner.sobject.SObject;
-import org.apache.sling.api.request.RequestParameterMap;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by glegarda on 22/02/18.
  */
 public interface SalesForceMapperService {
 
-	SObject[] mapFormToSalesForceLead(RequestParameterMap valuesFromForm, GenericList salesForceValueMap);
+	SObject[] mapFormToSalesForceLead(Map valuesFromForm, List<Item> salesForceValueMap);
 
-	SObject[] mapFormToSalesForceCampaignMember(String campaignID, String LeadId);
+	SObject[] mapFormToSalesForceCampaignMember(String LeadId, String campaignID);
 
 }
 

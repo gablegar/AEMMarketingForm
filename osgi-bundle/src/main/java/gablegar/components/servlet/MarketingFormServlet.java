@@ -38,7 +38,7 @@ public class MarketingFormServlet extends SlingAllMethodsServlet {
 	@Override
 	protected void doPost(SlingHttpServletRequest request, SlingHttpServletResponse response) throws ServletException, IOException {
 		log.info("Post to Marketing Form Component form {} /n with {}", request.getRequestURI(), request.getParameterMap().toString());
-		boolean result = formService.processForm(request.getResource(), request.getRequestParameterMap(), request.getResourceResolver());
+		boolean result = formService.processForm(request.getResource(), request.getParameterMap(), request.getResourceResolver());
 		if (result) {
 			response.setContentType("application/json");
 			response.setCharacterEncoding("utf-8");

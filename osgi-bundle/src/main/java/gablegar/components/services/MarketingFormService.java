@@ -1,9 +1,7 @@
 package gablegar.components.services;
 
-import org.apache.sling.api.request.RequestParameterMap;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceResolver;
-
 import java.util.Map;
 
 /**
@@ -11,6 +9,6 @@ import java.util.Map;
  */
 public interface MarketingFormService {
 
-	boolean processForm(Resource resource, RequestParameterMap formValues, ResourceResolver resourceResolver);
+	boolean processForm(Resource resource, Map formValues, ResourceResolver resourceResolver);
 }
 

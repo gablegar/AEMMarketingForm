@@ -1,4 +1,4 @@
-package impl;
+package gablegar.components.services.impl;
 
 import org.junit.Before;
 import org.junit.Test;
