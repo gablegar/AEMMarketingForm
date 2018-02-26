@@ -22,10 +22,10 @@ import org.slf4j.LoggerFactory;
 public class SalesForceServiceImpl implements SalesForceService {
 
 	@Reference
-	SalesForceConnectorService salesForceConnectorService;
+	private SalesForceConnectorService salesForceConnectorService;
 
 	@Reference
-	SalesForceMapperService salesForceMapperService;
+	private SalesForceMapperService salesForceMapperService;
 
 	private static final Logger log = LoggerFactory.getLogger(SalesForceService.class);
 
@@ -46,7 +46,7 @@ public class SalesForceServiceImpl implements SalesForceService {
 	private String retrieveSalesForceCampaignId(String campaignName) {
 		String CampaignId = null;
 		if(campaignName != null && !campaignName.isEmpty()) {
-			QueryResult qr = salesForceConnectorService.executeSalesForceQuery("Select Id from Campaign where Name = " + "'" + campaignName + "'");
+			QueryResult qr = salesForceConnectorService.executeSalesForceQuery("Select Id from Campaign where Name = '" + campaignName + "'");
 			if (qr.getRecords().length > 0) {
 				CampaignId = qr.getRecords()[0].getId();
 			} else {

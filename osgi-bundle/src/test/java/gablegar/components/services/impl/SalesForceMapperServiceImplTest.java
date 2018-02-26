@@ -44,19 +44,19 @@ public class SalesForceMapperServiceImplTest {
 		//A lead
 
 		SObject[] resultLead;
-		ResourceResolver resourceResolver = mock(ResourceResolver.class);
+		ResourceResolver mockedResourceResolver = mock(ResourceResolver.class);
 		PageManager mockedPageManager = mock(PageManager.class);
 		Page mockedPage = mock(Page.class);
 		GenericList mockedGenericList = mock(GenericList.class);
 		List<Item> mockedCampaignList = createMockSalesForceMappingList();
 
 		//when calling the mapper will bring a lead with all fields
-		when(resourceResolver.adaptTo(PageManager.class)).thenReturn(mockedPageManager);
+		when(mockedResourceResolver.adaptTo(PageManager.class)).thenReturn(mockedPageManager);
 		when(mockedPageManager.getPage(PATH_LIST_SALES_FORCE_FIELD_MAPPING)).thenReturn(mockedPage);
 		when(mockedPage.adaptTo(GenericList.class)).thenReturn(mockedGenericList);
 		when(mockedGenericList.getItems()).thenReturn(mockedCampaignList);
 
-		resultLead = salesForceMapperService.mapFormToSalesForceLead(createMockRequestData(), resourceResolver);
+		resultLead = salesForceMapperService.mapFormToSalesForceLead(createMockRequestData(), mockedResourceResolver);
 
 		//then the returned object should have all set
 		assertEquals(expectedFullLead()[0].toString(), resultLead[0].toString());
@@ -68,18 +68,18 @@ public class SalesForceMapperServiceImplTest {
 		//An entry with no fields
 
 		SObject[] resultLead;
-		ResourceResolver resourceResolver = mock(ResourceResolver.class);
+		ResourceResolver mockedResourceResolver = mock(ResourceResolver.class);
 		PageManager mockedPageManager = mock(PageManager.class);
 		Page mockedPage = mock(Page.class);
 		GenericList mockedGenericList = mock(GenericList.class);
 		List<Item> mockedCampaignList = createEmptyMockListData();
 
 		//when calling the mapper
-		when(resourceResolver.adaptTo(PageManager.class)).thenReturn(mockedPageManager);
+		when(mockedResourceResolver.adaptTo(PageManager.class)).thenReturn(mockedPageManager);
 		when(mockedPageManager.getPage(PATH_LIST_SALES_FORCE_FIELD_MAPPING)).thenReturn(mockedPage);
 		when(mockedPage.adaptTo(GenericList.class)).thenReturn(mockedGenericList);
 		when(mockedGenericList.getItems()).thenReturn(mockedCampaignList);
-		resultLead = salesForceMapperService.mapFormToSalesForceLead(createEmptyMockFormData(), resourceResolver);
+		resultLead = salesForceMapperService.mapFormToSalesForceLead(createEmptyMockFormData(), mockedResourceResolver);
 
 		//then the returned object should be empty
 		assertEquals(expectedRequestFormEmptyModel()[0].toString(), resultLead[0].toString());
@@ -91,19 +91,19 @@ public class SalesForceMapperServiceImplTest {
 		//A campaign Name
 
 		String resultName;
-		ResourceResolver resourceResolver = mock(ResourceResolver.class);
+		ResourceResolver mockedResourceResolver = mock(ResourceResolver.class);
 		PageManager mockedPageManager = mock(PageManager.class);
 		Page mockedPage = mock(Page.class);
 		GenericList mockedGenericList = mock(GenericList.class);
 		List<Item> mockedCampaignList = getMockedCampaignList();
 
 		//when calling the mapper will bring a lead with all fields
-		when(resourceResolver.adaptTo(PageManager.class)).thenReturn(mockedPageManager);
+		when(mockedResourceResolver.adaptTo(PageManager.class)).thenReturn(mockedPageManager);
 		when(mockedPageManager.getPage(PATH_LIST_SALES_FORCE_CAMPAIGN_FIELD_MAPPING)).thenReturn(mockedPage);
 		when(mockedPage.adaptTo(GenericList.class)).thenReturn(mockedGenericList);
 		when(mockedGenericList.getItems()).thenReturn(mockedCampaignList);
 
-		resultName = salesForceMapperService.mapCampaignFormNameToSalesForce(SalesForce.CAMPAIGN_NAME, resourceResolver);
+		resultName = salesForceMapperService.mapCampaignFormNameToSalesForce(SalesForce.CAMPAIGN_NAME, mockedResourceResolver);
 
 		//then the returned object should have all set
 		assertEquals(SalesForce.CAMPAIGN_NAME, resultName);
@@ -115,7 +115,7 @@ public class SalesForceMapperServiceImplTest {
 		//An empty campaign name
 
 		String resultCampaign;
-		ResourceResolver resourceResolver = mock(ResourceResolver.class);
+		ResourceResolver mockedResourceResolver = mock(ResourceResolver.class);
 		PageManager mockedPageManager = mock(PageManager.class);
 		Page mockedPage = mock(Page.class);
 		GenericList mockedGenericList = mock(GenericList.class);
@@ -123,11 +123,11 @@ public class SalesForceMapperServiceImplTest {
 
 		//
 		//when calling the mapper
-		when(resourceResolver.adaptTo(PageManager.class)).thenReturn(mockedPageManager);
+		when(mockedResourceResolver.adaptTo(PageManager.class)).thenReturn(mockedPageManager);
 		when(mockedPageManager.getPage(PATH_LIST_SALES_FORCE_CAMPAIGN_FIELD_MAPPING)).thenReturn(mockedPage);
 		when(mockedPage.adaptTo(GenericList.class)).thenReturn(mockedGenericList);
 		when(mockedGenericList.getItems()).thenReturn(mockedCampaignList);
-		resultCampaign = salesForceMapperService.mapCampaignFormNameToSalesForce(SalesForce.CAMPAIGN_NAME, resourceResolver);
+		resultCampaign = salesForceMapperService.mapCampaignFormNameToSalesForce(SalesForce.CAMPAIGN_NAME, mockedResourceResolver);
 
 		//then the returned object should be empty
 		assertEquals("", resultCampaign);
@@ -141,6 +141,7 @@ public class SalesForceMapperServiceImplTest {
 
 		SObject[] resultMember;
 		Map<String, String> mockedInputData = createEmptyMockCampaignMemberData();
+
 		//when calling the mapper
 		resultMember = salesForceMapperService.mapFormToSalesForceCampaignMember(mockedInputData.get(SalesForce.LEAD_ID), mockedInputData.get(SalesForce.CAMPAIGN_ID));
 

@@ -37,7 +37,7 @@ public class SalesForceConnectorServiceImpl implements SalesForceConnectorServic
 
 	@Activate
 	@Modified
-	protected void createConnection(ComponentContext context) {
+	private void createConnection(ComponentContext context) {
 		retrieveConfigFromOSGI(context);
 		if(configValuesNotEmpty()) {
 			ConnectorConfig config = new ConnectorConfig();
