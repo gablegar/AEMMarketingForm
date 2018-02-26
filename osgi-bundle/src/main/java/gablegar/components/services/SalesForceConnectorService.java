@@ -11,8 +11,9 @@ import com.sforce.soap.partner.sobject.SObject;
  */
 public interface SalesForceConnectorService {
 
-	QueryResult executeQuery(String query);
-	SaveResult[] createObject(SObject[] object);
-	DeleteResult[] deleteObject(String id);
+	QueryResult executeSalesForceQuery(String query);
+	SaveResult[] saveObjectInSalesForce(SObject[] object);
+	DeleteResult[] deleteObjectInSalesForce(String id);
+	boolean isSalesForceConnectionAvailable();
 }
 

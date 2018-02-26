@@ -1,8 +1,6 @@
 package gablegar.components.services.impl;
 
-import com.adobe.acs.commons.genericlists.GenericList;
-import com.day.cq.wcm.api.Page;
-import com.day.cq.wcm.api.PageManager;
+import gablegar.components.services.SalesForceConnectorService;
 import gablegar.components.services.SalesForceMapperService;
 import gablegar.components.services.SalesForceService;
 import org.apache.felix.scr.annotations.Reference;
@@ -18,8 +16,8 @@ import org.slf4j.LoggerFactory;
 import java.util.Map;
 
 import static gablegar.components.constants.FormConstants.CAMPAIGN_MISSING_CONFIGURE_PATH;
+import static gablegar.components.constants.FormConstants.CONNECTION_SALES_FORCE_MISSING;
 import static gablegar.components.constants.SalesForce.CAMPAIGN_NAME;
-import static gablegar.components.constants.SalesForce.PATH_LIST_SALESFORCE_FIELD_MAPPING;
 
 /**
  * Created by glegarda on 21/02/18.
@@ -32,22 +30,25 @@ public class MarketingFormServiceImpl implements MarketingFormService {
 	SalesForceMapperService salesForceMapperService;
 	@Reference
 	SalesForceService salesForceService;
+	@Reference
+	SalesForceConnectorService salesForceConnectorService;
 
-	private static final Logger log = LoggerFactory.getLogger(MarketingFormServiceImpl.class);
+	private static final Logger LOG = LoggerFactory.getLogger(MarketingFormServiceImpl.class);
 
 	public boolean processForm(Resource resource, Map formValues, ResourceResolver resourceResolver) {
 		boolean processingResult = false;
-		String campaignNameOnSalesForce = getCampaignName(formValues);
-		PageManager pageManager = resourceResolver.adaptTo(PageManager.class);
-		Page fieldMappingPage = pageManager.getPage(PATH_LIST_SALESFORCE_FIELD_MAPPING);
-		GenericList listOfMappingsSalesForce = fieldMappingPage.adaptTo(GenericList.class);
+		if (salesForceConnectorService.isSalesForceConnectionAvailable()) {
+			String campaignNameOnSalesForce = getCampaignName(formValues);
 
-		if(campaignNameOnSalesForce != null && !campaignNameOnSalesForce.isEmpty()) {
-			log.info("Campaign name on SalesForce: {} ", campaignNameOnSalesForce);
-			processingResult = salesForceService.saveNewLeadOnSalesForce(salesForceMapperService.mapFormToSalesForceLead(formValues, listOfMappingsSalesForce.getItems()), campaignNameOnSalesForce);
-			log.info("Post to Marketing Form Service done");
+			if (campaignNameOnSalesForce != null && !campaignNameOnSalesForce.isEmpty()) {
+				LOG.debug("Campaign name on SalesForce: {} ", campaignNameOnSalesForce);
+				processingResult = salesForceService.saveNewLeadOnSalesForce(salesForceMapperService.mapFormToSalesForceLead(formValues, resourceResolver), salesForceMapperService.mapCampaignFormNameToSalesForce(campaignNameOnSalesForce,resourceResolver));
+				LOG.info("Post to Marketing Form Service done");
+			} else {
+				LOG.error(CAMPAIGN_MISSING_CONFIGURE_PATH);
+			}
 		} else {
-			log.error(CAMPAIGN_MISSING_CONFIGURE_PATH);
+			LOG.error(CONNECTION_SALES_FORCE_MISSING);
 		}
 		return processingResult;
 	}
@@ -57,7 +58,7 @@ public class MarketingFormServiceImpl implements MarketingFormService {
 	}
 
 	protected void activate(ComponentContext context) {
-		log.info("MarketingFormServiceImpl activated");
+		LOG.info("MarketingFormServiceImpl activated");
 	}
 }
 

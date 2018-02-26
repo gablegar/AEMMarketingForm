@@ -5,7 +5,8 @@ package gablegar.components.constants;
  */
 public class SalesForce {
 
-	public static final String PATH_LIST_SALESFORCE_FIELD_MAPPING = "/etc/acs-commons/lists/salesforce-field-Mapping";
+	public static final String PATH_LIST_SALES_FORCE_FIELD_MAPPING = "/etc/acs-commons/lists/salesforce-field-Mapping";
+	public static final String PATH_LIST_SALES_FORCE_CAMPAIGN_FIELD_MAPPING = "/etc/acs-commons/lists/salesForceCampaignNames";
 	public static final String CAMPAIGN_NAME = "campaignName";
 	public static final String LEAD = "Lead";
 	public static final String CAMPAIGN_MEMBER = "CampaignMember";

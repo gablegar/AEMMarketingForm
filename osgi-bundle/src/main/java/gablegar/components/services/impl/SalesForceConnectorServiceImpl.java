@@ -58,7 +58,7 @@ public class SalesForceConnectorServiceImpl implements SalesForceConnectorServic
 	}
 
 
-	public QueryResult executeQuery(String query) {
+	public QueryResult executeSalesForceQuery(String query) {
 		try {
 			return connection.query(query);
 		} catch (Exception exception) {
@@ -67,7 +67,7 @@ public class SalesForceConnectorServiceImpl implements SalesForceConnectorServic
 		}
 	}
 
-	public SaveResult[] createObject(SObject[] object) {
+	public SaveResult[] saveObjectInSalesForce(SObject[] object) {
 		try {
 			return connection.create(object);
 		} catch (Exception exception) {
@@ -80,7 +80,7 @@ public class SalesForceConnectorServiceImpl implements SalesForceConnectorServic
 		}
 	}
 
-	public DeleteResult[] deleteObject(String id) {
+	public DeleteResult[] deleteObjectInSalesForce(String id) {
 		try {
 			return connection.delete(new String[]{id});
 		} catch (ConnectionException exception) {
@@ -91,6 +91,10 @@ public class SalesForceConnectorServiceImpl implements SalesForceConnectorServic
 			deleteResults[0] = error;
 			return deleteResults;
 		}
+	}
+
+	public boolean isSalesForceConnectionAvailable(){
+		return connection != null;
 	}
 
 

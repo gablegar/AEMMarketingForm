@@ -1,23 +1,34 @@
 package gablegar.components.services.impl;
 
+import com.adobe.acs.commons.genericlists.GenericList;
 import com.adobe.acs.commons.genericlists.GenericList.Item;
 import com.adobe.acs.commons.genericlists.impl.GenericListImpl;
+import com.day.cq.wcm.api.Page;
+import com.day.cq.wcm.api.PageManager;
 import com.sforce.soap.partner.sobject.SObject;
 import gablegar.components.constants.FormConstants;
 import gablegar.components.constants.SalesForce;
+import org.apache.sling.api.resource.ResourceResolver;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static gablegar.components.constants.SalesForce.PATH_LIST_SALES_FORCE_CAMPAIGN_FIELD_MAPPING;
+import static gablegar.components.constants.SalesForce.PATH_LIST_SALES_FORCE_FIELD_MAPPING;
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * Created by glegarda on 21/02/18.
  */
+@RunWith(MockitoJUnitRunner.class)
 public class SalesForceMapperServiceImplTest {
 
 	SalesForceMapperServiceImpl salesForceMapperService;
@@ -33,9 +44,19 @@ public class SalesForceMapperServiceImplTest {
 		//A lead
 
 		SObject[] resultLead;
+		ResourceResolver resourceResolver = mock(ResourceResolver.class);
+		PageManager mockedPageManager = mock(PageManager.class);
+		Page mockedPage = mock(Page.class);
+		GenericList mockedGenericList = mock(GenericList.class);
+		List<Item> mockedCampaignList = createMockSalesForceMappingList();
 
 		//when calling the mapper will bring a lead with all fields
-		resultLead = salesForceMapperService.mapFormToSalesForceLead(createMockRequestData(), createMockSalesForceMappingList());
+		when(resourceResolver.adaptTo(PageManager.class)).thenReturn(mockedPageManager);
+		when(mockedPageManager.getPage(PATH_LIST_SALES_FORCE_FIELD_MAPPING)).thenReturn(mockedPage);
+		when(mockedPage.adaptTo(GenericList.class)).thenReturn(mockedGenericList);
+		when(mockedGenericList.getItems()).thenReturn(mockedCampaignList);
+
+		resultLead = salesForceMapperService.mapFormToSalesForceLead(createMockRequestData(), resourceResolver);
 
 		//then the returned object should have all set
 		assertEquals(expectedFullLead()[0].toString(), resultLead[0].toString());
@@ -47,13 +68,71 @@ public class SalesForceMapperServiceImplTest {
 		//An entry with no fields
 
 		SObject[] resultLead;
+		ResourceResolver resourceResolver = mock(ResourceResolver.class);
+		PageManager mockedPageManager = mock(PageManager.class);
+		Page mockedPage = mock(Page.class);
+		GenericList mockedGenericList = mock(GenericList.class);
+		List<Item> mockedCampaignList = createEmptyMockListData();
 
 		//when calling the mapper
-		resultLead = salesForceMapperService.mapFormToSalesForceLead(createEmptyMockFormData(), createEmptyMockListData());
+		when(resourceResolver.adaptTo(PageManager.class)).thenReturn(mockedPageManager);
+		when(mockedPageManager.getPage(PATH_LIST_SALES_FORCE_FIELD_MAPPING)).thenReturn(mockedPage);
+		when(mockedPage.adaptTo(GenericList.class)).thenReturn(mockedGenericList);
+		when(mockedGenericList.getItems()).thenReturn(mockedCampaignList);
+		resultLead = salesForceMapperService.mapFormToSalesForceLead(createEmptyMockFormData(), resourceResolver);
 
 		//then the returned object should be empty
 		assertEquals(expectedRequestFormEmptyModel()[0].toString(), resultLead[0].toString());
 	}
+
+	@Test
+	public void testShouldMapCampaignField(){
+		//given
+		//A campaign Name
+
+		String resultName;
+		ResourceResolver resourceResolver = mock(ResourceResolver.class);
+		PageManager mockedPageManager = mock(PageManager.class);
+		Page mockedPage = mock(Page.class);
+		GenericList mockedGenericList = mock(GenericList.class);
+		List<Item> mockedCampaignList = getMockedCampaignList();
+
+		//when calling the mapper will bring a lead with all fields
+		when(resourceResolver.adaptTo(PageManager.class)).thenReturn(mockedPageManager);
+		when(mockedPageManager.getPage(PATH_LIST_SALES_FORCE_CAMPAIGN_FIELD_MAPPING)).thenReturn(mockedPage);
+		when(mockedPage.adaptTo(GenericList.class)).thenReturn(mockedGenericList);
+		when(mockedGenericList.getItems()).thenReturn(mockedCampaignList);
+
+		resultName = salesForceMapperService.mapCampaignFormNameToSalesForce(SalesForce.CAMPAIGN_NAME, resourceResolver);
+
+		//then the returned object should have all set
+		assertEquals(SalesForce.CAMPAIGN_NAME, resultName);
+	}
+
+	@Test
+	public void testShouldNotMapCampaignField(){
+		//given
+		//An empty campaign name
+
+		String resultCampaign;
+		ResourceResolver resourceResolver = mock(ResourceResolver.class);
+		PageManager mockedPageManager = mock(PageManager.class);
+		Page mockedPage = mock(Page.class);
+		GenericList mockedGenericList = mock(GenericList.class);
+		List<Item> mockedCampaignList = createMockSalesForceMappingList();
+
+		//
+		//when calling the mapper
+		when(resourceResolver.adaptTo(PageManager.class)).thenReturn(mockedPageManager);
+		when(mockedPageManager.getPage(PATH_LIST_SALES_FORCE_CAMPAIGN_FIELD_MAPPING)).thenReturn(mockedPage);
+		when(mockedPage.adaptTo(GenericList.class)).thenReturn(mockedGenericList);
+		when(mockedGenericList.getItems()).thenReturn(mockedCampaignList);
+		resultCampaign = salesForceMapperService.mapCampaignFormNameToSalesForce(SalesForce.CAMPAIGN_NAME, resourceResolver);
+
+		//then the returned object should be empty
+		assertEquals("", resultCampaign);
+	}
+
 
 	@Test
 	public void testShouldNotMapCampaignFields(){
@@ -117,6 +196,13 @@ public class SalesForceMapperServiceImplTest {
 		mockedDataList.add(companyNameMapping);
 		mockedDataList.add(phoneNameMapping);
 		mockedDataList.add(emailNameMapping);
+		return mockedDataList;
+	}
+
+	private List<Item> getMockedCampaignList() {
+		List<Item> mockedDataList = new ArrayList<>();
+		Item campaignNameMapping = new GenericListImpl.ItemImpl(SalesForce.CAMPAIGN_NAME , SalesForce.CAMPAIGN_NAME, null);
+		mockedDataList.add(campaignNameMapping);
 		return mockedDataList;
 	}
 

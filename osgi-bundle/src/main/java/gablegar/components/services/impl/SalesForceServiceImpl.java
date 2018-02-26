@@ -1,7 +1,6 @@
 package gablegar.components.services.impl;
 
 import com.sforce.soap.partner.Error;
-import com.sforce.soap.partner.PartnerConnection;
 import com.sforce.soap.partner.QueryResult;
 import com.sforce.soap.partner.SaveResult;
 import com.sforce.soap.partner.sobject.SObject;
@@ -34,8 +33,10 @@ public class SalesForceServiceImpl implements SalesForceService {
 		boolean success = false;
 		String campaignId = retrieveSalesForceCampaignId(campaignName);
 		if(campaignId != null) {
-			SaveResult saveLeadResults = salesForceConnectorService.createObject(lead)[0]; //this is because we save only one lead
-			success = saveLeadOnCampaign(saveLeadResults, campaignId);
+			SaveResult saveLeadResults = salesForceConnectorService.saveObjectInSalesForce(lead)[0]; //this is because we save only one lead
+			if(saveLeadResults.isSuccess()) {
+				success = saveLeadOnCampaign(saveLeadResults, campaignId);
+			}
 		} else {
 			log.error("Could not save lead as campaign ID is invalid");
 		}
@@ -45,7 +46,7 @@ public class SalesForceServiceImpl implements SalesForceService {
 	private String retrieveSalesForceCampaignId(String campaignName) {
 		String CampaignId = null;
 		if(campaignName != null && !campaignName.isEmpty()) {
-			QueryResult qr = salesForceConnectorService.executeQuery("Select Id from Campaign where Name = " + "'" + campaignName + "'");
+			QueryResult qr = salesForceConnectorService.executeSalesForceQuery("Select Id from Campaign where Name = " + "'" + campaignName + "'");
 			if (qr.getRecords().length > 0) {
 				CampaignId = qr.getRecords()[0].getId();
 			} else {
@@ -60,16 +61,13 @@ public class SalesForceServiceImpl implements SalesForceService {
 
 	private boolean saveLeadOnCampaign(SaveResult leadResults, String campaignId) {
 		try {
-			if (leadResults.isSuccess()) {
-				SObject[] campaignMember = salesForceMapperService.mapFormToSalesForceCampaignMember(leadResults.getId(), campaignId);
-				SaveResult[] resultAddingLeadToCampaign = salesForceConnectorService.createObject(campaignMember);
-				//in this case we are sure that SaveResult has only one element as we only saved one lead
-				if (resultAddingLeadToCampaign[0].isSuccess()) {
-					log.info("Lead {} created and added to campaign {} ", leadResults.getId(), resultAddingLeadToCampaign[0].getId());
-					return true;
-				} else {
-					deleteLeadIfCampaignError(leadResults);
-				}
+			SObject[] campaignMember = salesForceMapperService.mapFormToSalesForceCampaignMember(leadResults.getId(), campaignId);
+			SaveResult[] resultAddingLeadToCampaign = salesForceConnectorService.saveObjectInSalesForce(campaignMember);
+			//in this case we are sure that SaveResult has only one element as we only saved one lead
+			if (resultAddingLeadToCampaign[0].isSuccess()) {
+				log.info("Lead {} created and added to campaign {} ",
+						leadResults.getId(), resultAddingLeadToCampaign[0].getId());
+				return true;
 			} else {
 				deleteLeadIfCampaignError(leadResults);
 			}
@@ -80,7 +78,7 @@ public class SalesForceServiceImpl implements SalesForceService {
 	}
 
 	private void deleteLeadIfCampaignError(SaveResult result) throws ConnectionException {
-		salesForceConnectorService.deleteObject(result.getId());
+		salesForceConnectorService.deleteObjectInSalesForce(result.getId());
 		logSalesForceErrors(result);
 	}
 
