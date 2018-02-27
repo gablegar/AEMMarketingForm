@@ -83,7 +83,7 @@ public class SalesForceConnectorServiceImpl implements SalesForceConnectorServic
 	public DeleteResult[] deleteObjectInSalesForce(String id) {
 		try {
 			return connection.delete(new String[]{id});
-		} catch (ConnectionException exception) {
+		} catch (Exception exception) {
 			log.error("Error deleting object in SalesForce id: {}, exception :{}",id, exception);
 			DeleteResult[] deleteResults = new DeleteResult[1];
 			DeleteResult error = new DeleteResult();
@@ -114,11 +114,11 @@ public class SalesForceConnectorServiceImpl implements SalesForceConnectorServic
 		this.username = username;
 	}
 
-	public String getPassword() {
+	private String getPassword() {
 		return password;
 	}
 
-	public void setPassword(String password) {
+	private void setPassword(String password) {
 		this.password = password;
 	}
 

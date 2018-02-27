@@ -5,16 +5,16 @@
 </style>
 <div id="bodyContent">
     <div class="genericBox">
-        <div>
-            You want to receive new benefits? Easy. Just fill in the fields below.
-        </div>
-        <form action="${currentPage.path}/jcr:content.save.json" method="post">
-            First name: <input type="text" name="firstName" placeholder="first name"><br>
-            Last name: <input type="text" name="lastName" placeholder="last name"><br>
-            Business: <input type="text" name="business" placeholder="Business"><br>
-            Phone: <input type="text" name="phoneNumber" placeholder="phone number"><br>
+        <h1>
+            ${properties.title}
+        </h1>
+        <form action="${currentPage.path}/jcr:content.save.jsonsdfs" method="post">
+            <input class="form-input" type="text" name="firstName" placeholder="first name"><br>
+            <input class="form-input" type="text" name="lastName" placeholder="last name"><br>
+            <input class="form-input" type="text" name="business" placeholder="Business"><br>
+            <input class="form-input" type="text" name="phoneNumber" placeholder="phone number"><br>
             <input type="hidden" name="campaignName" value="${properties.campaignName}"><br>
-            <input type="submit" value="Submit">
+            <input type="submit" class="submit" value="Submit">
         </form>
     </div>
 </div>

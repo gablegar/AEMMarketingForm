@@ -77,7 +77,7 @@ public class SalesForceServiceImpl implements SalesForceService {
 		return false;
 	}
 
-	private void deleteLeadIfCampaignError(SaveResult result) throws ConnectionException {
+	private void deleteLeadIfCampaignError(SaveResult result) {
 		salesForceConnectorService.deleteObjectInSalesForce(result.getId());
 		logSalesForceErrors(result);
 	}

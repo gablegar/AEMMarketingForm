@@ -22,6 +22,26 @@
 						options="/etc/acs-commons/lists/backgroundColorList/_jcr_content.list.json"
 						type="select"
 						xtype="selection"/>
+				<headerTitle
+						jcr:primaryType="cq:Widget"
+						fieldLabel="Enter form title"
+						name="./title"
+						xtype="textfield"/>
+				<successTitle
+						jcr:primaryType="cq:Widget"
+						fieldLabel="Enter success message"
+						name="./successMessage"
+						xtype="textfield"/>
+				<errorTitle
+						jcr:primaryType="cq:Widget"
+						fieldLabel="Enter success message"
+						name="./errorMessage"
+						xtype="textfield"/>
+				<fieldListURL
+						jcr:primaryType="cq:Widget"
+						fieldLabel="Enter ACS generic field list url"
+						name="./fieldsListUrl"
+						xtype="textfield"/>
 			</items>
 		</tab1>
 	</items>

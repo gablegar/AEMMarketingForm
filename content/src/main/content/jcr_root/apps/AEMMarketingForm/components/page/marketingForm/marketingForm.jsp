@@ -1,4 +1,10 @@
 <%@include file="/libs/foundation/global.jsp"%>
 <%@page session="false"%>
-<cq:include script="head.jsp"/>
+<head>
+    <cq:includeClientLib css="AEMMarketingForm.marketingForm"/>
+    <cq:include script="head.jsp"/>
+</head>
+<body>
 <cq:include path="par" resourceType="foundation/components/parsys"/>
+</body>
+

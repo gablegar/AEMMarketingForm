@@ -57,7 +57,7 @@ public class MarketingFormServiceImpl implements MarketingFormService {
 		return formValues.get(CAMPAIGN_NAME)==null?null:((String[])formValues.get(CAMPAIGN_NAME))[0];
 	}
 
-	protected void activate(ComponentContext context) {
+	protected void activate() {
 		LOG.info("MarketingFormServiceImpl activated");
 	}
 }
