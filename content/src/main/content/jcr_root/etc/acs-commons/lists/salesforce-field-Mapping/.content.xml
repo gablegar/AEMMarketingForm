@@ -3,7 +3,7 @@
     jcr:primaryType="cq:Page">
     <jcr:content
         cq:designPath="/etc/designs/acs-commons"
-        cq:lastModified="{Date}2018-02-26T17:08:45.227-05:00"
+        cq:lastModified="{Date}2018-02-27T11:27:15.516-05:00"
         cq:lastModifiedBy="admin"
         cq:template="/apps/acs-commons/templates/utilities/genericlist"
         jcr:primaryType="cq:PageContent"
@@ -15,39 +15,49 @@
             <item
                 jcr:created="{Date}2018-02-22T11:57:56.143-05:00"
                 jcr:createdBy="admin"
-                jcr:lastModified="{Date}2018-02-23T17:03:57.114-05:00"
+                jcr:lastModified="{Date}2018-02-27T11:08:54.654-05:00"
                 jcr:lastModifiedBy="admin"
                 jcr:primaryType="nt:unstructured"
-                jcr:title="firstName"
+                jcr:title="First name"
                 sling:resourceType="acs-commons/components/utilities/genericlist/item"
                 value="firstName"/>
             <item_121765750
                 jcr:created="{Date}2018-02-23T15:25:32.458-05:00"
                 jcr:createdBy="admin"
-                jcr:lastModified="{Date}2018-02-23T17:04:01.297-05:00"
+                jcr:lastModified="{Date}2018-02-27T11:09:03.912-05:00"
                 jcr:lastModifiedBy="admin"
                 jcr:primaryType="nt:unstructured"
-                jcr:title="lastName"
+                jcr:title="Last name"
                 sling:resourceType="acs-commons/components/utilities/genericlist/item"
                 value="lastName"/>
             <item_143243111
                 jcr:created="{Date}2018-02-23T15:00:51.804-05:00"
                 jcr:createdBy="admin"
-                jcr:lastModified="{Date}2018-02-23T15:29:05.854-05:00"
+                jcr:lastModified="{Date}2018-02-27T11:09:06.360-05:00"
                 jcr:lastModifiedBy="admin"
                 jcr:primaryType="nt:unstructured"
                 jcr:title="business"
+                jcr:title.en="Business name"
                 sling:resourceType="acs-commons/components/utilities/genericlist/item"
                 value="Company"/>
             <item_229455377
                 jcr:created="{Date}2018-02-24T15:10:56.716-05:00"
                 jcr:createdBy="admin"
-                jcr:lastModified="{Date}2018-02-26T15:22:51.576-05:00"
+                jcr:lastModified="{Date}2018-02-27T11:09:18.562-05:00"
                 jcr:lastModifiedBy="admin"
                 jcr:primaryType="nt:unstructured"
-                jcr:title="phoneNumber"
+                jcr:title="Phone number"
                 sling:resourceType="acs-commons/components/utilities/genericlist/item"
                 value="phone"/>
+            <item_1056111717
+                jcr:created="{Date}2018-02-27T11:27:08.804-05:00"
+                jcr:createdBy="admin"
+                jcr:lastModified="{Date}2018-02-27T11:27:15.510-05:00"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="email"
+                sling:resourceType="acs-commons/components/utilities/genericlist/item"
+                value="email"/>
         </list>
     </jcr:content>
 </jcr:root>

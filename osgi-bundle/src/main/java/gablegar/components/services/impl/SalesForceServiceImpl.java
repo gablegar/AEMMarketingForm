@@ -37,6 +37,9 @@ public class SalesForceServiceImpl implements SalesForceService {
 			if(saveLeadResults.isSuccess()) {
 				success = saveLeadOnCampaign(saveLeadResults, campaignId);
 			}
+			else {
+				logSalesForceErrors(saveLeadResults);
+			}
 		} else {
 			log.error("Could not save lead as campaign ID is invalid");
 		}

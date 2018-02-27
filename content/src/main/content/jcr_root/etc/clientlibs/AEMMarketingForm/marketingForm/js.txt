@@ -1,0 +1,4 @@
+#base=js
+angular.min.js
+registration-form-app.js
+registration-form-controller.js

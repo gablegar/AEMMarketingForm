@@ -2,19 +2,24 @@
 <jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
     jcr:primaryType="cq:Page">
     <jcr:content
-        cq:lastModified="{Date}2018-02-24T10:58:15.879-05:00"
+        cq:lastModified="{Date}2018-02-27T11:26:08.497-05:00"
         cq:lastModifiedBy="admin"
         cq:template="/apps/AEMMarketingForm/templates/todoTemplate"
         jcr:primaryType="cq:PageContent"
         jcr:title="Campaign for new clients"
-        sling:resourceType="AEMMarketingForm/components/page/marketingForm">
+        sling:resourceType="AEMMarketingForm/components/page/marketingForm"
+        business="fdasdf"
+        campaignName="New Clients Campaign"
+        firstName="test"
+        lastName="delete"
+        phoneNumber="asdfas">
         <par
             jcr:primaryType="nt:unstructured"
             sling:resourceType="foundation/components/parsys">
             <header
                 jcr:created="{Date}2018-02-24T09:44:50.116-05:00"
                 jcr:createdBy="admin"
-                jcr:lastModified="{Date}2018-02-24T09:45:28.770-05:00"
+                jcr:lastModified="{Date}2018-02-26T17:38:17.279-05:00"
                 jcr:lastModifiedBy="admin"
                 jcr:primaryType="nt:unstructured"
                 sling:resourceType="AEMMarketingForm/components/content/header"
@@ -22,16 +27,20 @@
             <registrationform
                 jcr:created="{Date}2018-02-20T19:55:07.343-05:00"
                 jcr:createdBy="admin"
-                jcr:lastModified="{Date}2018-02-24T10:58:15.876-05:00"
+                jcr:lastModified="{Date}2018-02-27T11:26:08.491-05:00"
                 jcr:lastModifiedBy="admin"
                 jcr:primaryType="nt:unstructured"
                 sling:resourceType="AEMMarketingForm/components/content/registrationForm"
                 campaignName="New Clients Campaign"
-                color="#9c27b0"/>
+                errorMessage="ups! there has been an error!"
+                fieldsListUrl="http://localhost:4502/etc/acs-commons/lists/salesforce-field-Mapping"
+                sendAnother="Register new user"
+                successMessage="Thanks, you have been registred"
+                title="You want to receive new benefits? Easy. Just fill in the fields below."/>
             <footer
                 jcr:created="{Date}2018-02-24T09:39:35.782-05:00"
                 jcr:createdBy="admin"
-                jcr:lastModified="{Date}2018-02-24T09:45:42.376-05:00"
+                jcr:lastModified="{Date}2018-02-26T17:38:11.719-05:00"
                 jcr:lastModifiedBy="admin"
                 jcr:primaryType="nt:unstructured"
                 sling:resourceType="AEMMarketingForm/components/content/footer"

@@ -34,8 +34,13 @@
 						xtype="textfield"/>
 				<errorTitle
 						jcr:primaryType="cq:Widget"
-						fieldLabel="Enter success message"
+						fieldLabel="Enter error message"
 						name="./errorMessage"
+						xtype="textfield"/>
+				<sendAnother
+						jcr:primaryType="cq:Widget"
+						fieldLabel="Enter the text for send another button"
+						name="./sendAnother"
 						xtype="textfield"/>
 				<fieldListURL
 						jcr:primaryType="cq:Widget"

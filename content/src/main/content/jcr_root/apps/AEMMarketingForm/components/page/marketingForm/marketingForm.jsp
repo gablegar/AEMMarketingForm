@@ -2,6 +2,7 @@
 <%@page session="false"%>
 <head>
     <cq:includeClientLib css="AEMMarketingForm.marketingForm"/>
+    <cq:includeClientLib js="AEMMarketingForm.marketingForm"/>
     <cq:include script="head.jsp"/>
 </head>
 <body>
