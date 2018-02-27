@@ -27,10 +27,8 @@ public class SalesForceMapperServiceImpl implements SalesForceMapperService {
 		SObject[] leads = new SObject[1];
 		final SObject lead = new SObject();
 		lead.setType(LEAD);
-		for(Item item : salesForceValueMap) {
-			String title = item.getTitle();
-			lead.setField(item.getValue(), valuesFromForm.get(title) == null ? null:((String[])valuesFromForm.get(title))[0]);
-		}
+		salesForceValueMap.stream().forEach(item -> lead.setField(item.getValue(), valuesFromForm.get(item.getTitle()) == null
+													? null:((String[])valuesFromForm.get(item.getTitle()))[0]));
 		leads[0] = lead;
 		return leads;
 	}

@@ -116,7 +116,6 @@
                         <Bundle-SymbolicName>gablegar.example.aem.AEMMarketingForm-Bundle</Bundle-SymbolicName>
 						<!--<Export-Package>com.sforce.ws.*,com.sforce.soap.partner.*,org.apache.commons.beanutils.*,com.google.*</Export-Package>-->
 						<Embed-Dependency>*;scope=compile</Embed-Dependency>
-						<Embed-Dependency>*;scope=compile</Embed-Dependency>
 						<Embed-Transitive>true</Embed-Transitive>
 						<Import-Package>!com.google.appengine.api.urlfetch.*,!org.apache.log.*,*</Import-Package>
 					</instructions>
